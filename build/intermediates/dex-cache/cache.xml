@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/c4b7e4f345aa6ab49cead68179a0c1b43aa3fc88/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="f428e2fbc9ed0b297e3a3f420e51e6982f66822d">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_3bd53aec77b3bc6f4ac5b6743684e59203306dad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/66eb96aa7f5e076925fa1707043955feda5ce078/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_f9f1fd2b6a29eec07b483b927314bdc06cf19af6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/da78c8081e45e0220adaa7496fa1255a4bfe867b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="40392f30a601db5675cdf18192aab013d6fee6ec">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_2a70c16d9156756e0bb17e314236622b4eaae7dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/8b67e512439d70b89e62fd937ee0c28fbe1ff724/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="233f60a165ae622c8b36731502ebbda0f65e1930">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_985460a81cdd912de09fbd4b3933faf5fd1e3b2a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/support-annotations-26.1.0_cc3845215af0ca614de93379a0a0bad6fda6345d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/34fdf5e1b930e126be4d63a35d603f99dccec226/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="6f4138a4e065826cb044d49faea4cfd7191773d1">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_12e21e20c2606870ba39956dc23259365c799dc4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/d1f7470e22c8c56cce57cb9be5b96d48416ba4c8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="b62fdc4cfef174c1e456014195c83fa7de7dc041">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_50c3b5c9ca8e2a101a8ec5fb4e973543678a7416.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/53ef7abc1be8eaf8399c132944c313298dc3002a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="7efef32744ca4a436492d5cf28c08698cc2af256">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_c7f576594da360d9911f725a7ca3073ea977114d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/57d13195b80a1ed3c3ddc674567ffe8a93e4471f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="b15c6ded887ad967e20bb335c1a121b253c04dce">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_c376c36f7c533aa7e34d87f4b7c8c615a6ba8172.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.gradle/caches/modules-2/files-2.1/com.android.support.constraint/constraint-layout-solver/1.1.3/bde0667d7414c16ed62d3cfe993cff7f9d732373/constraint-layout-solver-1.1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="bde0667d7414c16ed62d3cfe993cff7f9d732373">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.1.3_d756df5872c215ab77b5cb25a1cbc4b68c6ae061.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/c9709d7f074918ead4c4c3f63311a9fd31ae9c45/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="f97cf85b0fe70d37a705111dafa6b1b418ea1650">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_d80aa9ceac7bdd73e0a32d63eb68ab9447af0fbd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/6b7e3b8e2d1f26134fda3f67d6d013fc2b9e88b6/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="508f50705b4fde51a16259f29c854201a3044516">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_d648d712ef6d590e6a24ed31a3092dbb0396ff03.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.android/build-cache/533c072194f77baaa311c6db2942c14181ee1e18/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="2442771a5590dd4eb4bce00c2e9dca9e22e4c963">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/classes_651e730b6dd08ed9f4bb3395d382e39ed2fc49cd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.0/e414a4cb28434e25c4f6aa71426eb20cf4874ae9/common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="e414a4cb28434e25c4f6aa71426eb20cf4874ae9">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/common-1.0.0_fb954eaf370829c43e7e6fa51c5191ce08e874ba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/daniel/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="/Users/daniel/Documents/Semestre 9/Application internet et mobilité/TennisBet/app/build/intermediates/pre-dexed/debug/common-1.0.0_c62b0c9208c9a3e46d53d601384eb3665fc460c3.jar" />
+    </item>
+
+</items>
