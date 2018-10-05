@@ -96,4 +96,9 @@ public class Player implements Parcelable {
         parcel.writeInt(rank);
         parcel.writeString(country);
     }
+
+    @Override
+    public String toString() {
+        return first_name + " " + surname ;
+    }
 }

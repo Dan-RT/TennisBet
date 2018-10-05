@@ -182,4 +182,9 @@ public class Match implements Parcelable {
         parcel.writeInt(nb_exchanges);
         parcel.writeTypedObject(player_1, 1);
     }
+
+    @Override
+    public String toString() {
+        return  tournament_name + " - " + start_hour + "\n" + player_1.toString() + " - " + player_2.toString();
+    }
 }

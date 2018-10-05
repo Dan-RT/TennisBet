@@ -30,7 +30,7 @@ router.get('/match/:id', function (req, res, next) {
 
 	var game = null;
 
-	if (req.params.id == 1) {
+	if (req.params.id == 0) {
 		game = new Partie(0, new Joueur('Albert', 'Ramos', 28, 56, 'Espagne'), new Joueur('Milos', 'Raonic', 28, 16, 'Canada'), '1', 'hale', '12h30');  
 	} else {
 		game = new Partie(1, new Joueur('Roger', 'Federer', 28, 56, 'Suisse'), new Joueur('Rafael', 'Nadal', 28, 16, 'Espagne'), '1', 'hale', '10h30');  

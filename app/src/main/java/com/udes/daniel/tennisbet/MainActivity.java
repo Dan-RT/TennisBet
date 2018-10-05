@@ -1,12 +1,17 @@
 package com.udes.daniel.tennisbet;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button test_Button;
     private Button reset_Button;
     private Button launch_match_activity_Button;
+    private ListView listView_match;
     private boolean toggle = false;
 
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
@@ -36,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         test_Button = (Button) findViewById(R.id.activity_main_test_button);
         reset_Button = (Button) findViewById(R.id.activity_main_reset_button);
         launch_match_activity_Button = (Button) findViewById(R.id.activity_main_launch_match_activity);
+        listView_match = (ListView) findViewById(R.id.activity_main_list_match);
 
         refresh_data();
+
+        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
+        listView_match.setAdapter(adapter);
 
         test_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launch_match(2);
+            }
+        });
+
+        listView_match.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                launch_match(position);
             }
         });
 
