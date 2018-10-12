@@ -101,4 +101,5 @@ public class Player implements Parcelable {
     public String toString() {
         return first_name + " " + surname ;
     }
+
 }
