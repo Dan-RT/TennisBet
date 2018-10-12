@@ -12,43 +12,21 @@
             android:id="@+id/activity_main_test_Tewt_View"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:text="Liste des matchs"
             android:gravity="center"
-            android:layout_marginTop="100dp" android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            android:layout_marginTop="50dp" android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
-    <Button
-            android:id="@+id/activity_main_test_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEST"
-            android:gravity="center"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="130dp"/>
-
-    <Button
-            android:id="@+id/activity_main_reset_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RESET"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="130dp"/>
-
-    <Button
-            android:id="@+id/activity_main_launch_match_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Launch Match"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="130dp"/>
-
-    <ListView
-        android:id="@+id/activity_main_list_match"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/activity_main_list_match"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
 
 
