@@ -3,16 +3,22 @@ package com.udes.daniel.tennisbet;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Parcelable;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivity current_activity;
     private TextView test_TextView;
-    private Button test_Button;
-    private Button reset_Button;
-    private Button launch_match_activity_Button;
     private ListView listView_match;
-    private boolean toggle = false;
 
+    private boolean dataChanged = false;
+    private ArrayAdapter adapter;
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
 
     @Override
@@ -39,50 +43,26 @@ public class MainActivity extends AppCompatActivity {
         Log.i("CIO", "MainActivity : onCreate !");
 
         test_TextView = (TextView) findViewById(R.id.activity_main_test_Tewt_View);
-        test_Button = (Button) findViewById(R.id.activity_main_test_button);
-        reset_Button = (Button) findViewById(R.id.activity_main_reset_button);
-        launch_match_activity_Button = (Button) findViewById(R.id.activity_main_launch_match_activity);
         listView_match = (ListView) findViewById(R.id.activity_main_list_match);
 
-        refresh_data();
+        retrieve_data();
 
-        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
+        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
         listView_match.setAdapter(adapter);
-
-        test_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!toggle) {
-                    test_TextView.setText("TEST");
-                    toggle = true;
-                } else {
-                    test_TextView.setText("RE-TEST");
-                    toggle = false;
-                }
-            }
-        });
-
-        reset_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*test_TextView.setText("Hello World!");
-                refresh_data();
-                toggle = false;*/
-                launch_match(1);
-            }
-        });
-
-        launch_match_activity_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launch_match(2);
-            }
-        });
 
         listView_match.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 launch_match(position);
+            }
+        });
+
+        final SwipeRefreshLayout swipeRefresh = findViewById(R.id.swiperefresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh_data();
+                swipeRefresh.setRefreshing(false);
             }
         });
 
@@ -106,13 +86,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ListMatchs.clear();
-        ListMatchs = tmp;
+        //ListMatchs = tmp;
+        for (Match match: tmp) {
+            ListMatchs.add(match);
+        }
 
     }
 
     private void update_UI(){
         if (ListMatchs != null) {
-            //create the UI
+            current_activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    adapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 
