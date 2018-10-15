@@ -2,6 +2,9 @@ package com.udes.daniel.tennisbet;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,58 @@ public class Match implements Parcelable {
 
         this.contests.add(contest_p_1);
         this.contests.add(contest_p_2);
+    }
+
+    public Match (JSONObject match_json) {
+
+        try {
+            this.setId(match_json.getInt("id"));
+
+            JSONObject player_1_json = (JSONObject) match_json.get("joueur1");
+            Player player1 = new Player((String)player_1_json.get("prenom"), (String)player_1_json.get("nom"), (int)player_1_json.get("age"), (int) player_1_json.get("rang"), (String)player_1_json.get("pays"));
+
+            JSONObject player_2_json = (JSONObject) match_json.get("joueur2");
+            Player player2 = new Player((String)player_2_json.get("prenom"), (String)player_2_json.get("nom"), (int)player_2_json.get("age"), (int) player_2_json.get("rang"), (String)player_2_json.get("pays"));
+
+            this.setPlayer_1(player1);
+            this.setPlayer_2(player2);
+
+            this.setPitch(match_json.getInt("terrain"));
+            this.setTournament_name(match_json.getString("tournoi"));
+            this.setStart_hour(match_json.getString("heure_debut"));
+            this.setMatch_time(match_json.getInt("temps_partie"));
+            this.setServer(match_json.getInt("serveur"));
+            this.setSpeed_last_serv(match_json.getInt("vitesse_dernier_service"));
+            this.setNb_exchanges(match_json.getInt("nombre_coup_dernier_echange"));
+
+            JSONArray contestation = match_json.getJSONArray("constestation");
+            this.setContests((int)contestation.get(0), (int)contestation.get(1));
+
+
+            JSONObject points_json = match_json.getJSONObject("pointage");
+            JSONArray sets_json = points_json.getJSONArray("manches");
+
+            JSONArray games_json = points_json.getJSONArray("jeu");
+            ArrayList<ArrayList<Integer>> games = new ArrayList<ArrayList<Integer>>();
+
+            for (int j = 0; j < games_json.length(); j++) {
+                ArrayList<Integer> game = new ArrayList<Integer>();
+                JSONArray game_json = (JSONArray) games_json.get(j);
+                for (int k = 0; k < game_json.length(); k++) {
+                    game.add(game_json.getInt(k));
+                }
+                games.add(game);
+            }
+
+            JSONArray exchange_json = points_json.getJSONArray("echange");
+            boolean final_ = points_json.getBoolean("final");
+            Points points = new Points(sets_json.getInt(0), sets_json.getInt(1), games, exchange_json.getInt(0), exchange_json.getInt(1), final_);
+
+            this.setPoints(points);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     protected Match(Parcel in) {
@@ -153,6 +208,9 @@ public class Match implements Parcelable {
     }
 
     public void setContests(int contests_p_1, int contests_p_2) {
+        if(this.contests == null){
+            this.contests = new ArrayList<Integer>();
+        }
         this.contests.add(contests_p_1);
         this.contests.add(contests_p_2);
     }
