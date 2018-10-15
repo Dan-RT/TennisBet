@@ -34,6 +34,10 @@ public class MatchActivity extends AppCompatActivity {
         //Match match = (Match) i.getParcelableExtra("match_chosen");
         refresh_data();
 
+        //Launch service
+        Intent intent = new Intent(current_activity, UpdateService.class);
+        intent.putExtra("id_match",match.getId());
+        startService(intent);
     }
 
     private void refresh_data () {
