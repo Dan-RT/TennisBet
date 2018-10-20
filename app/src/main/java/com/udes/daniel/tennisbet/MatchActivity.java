@@ -1,11 +1,15 @@
 package com.udes.daniel.tennisbet;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +19,15 @@ public class MatchActivity extends AppCompatActivity {
     private MatchActivity current_activity;
     private Match match;
     private TextView text_view_player_1;
+    private TextView text_view_sets_player_1;
+    private TextView text_view_games_player_1;
+    private TextView text_view_points_player_1;
+
     private TextView text_view_player_2;
+    private TextView text_view_sets_player_2;
+    private TextView text_view_games_player_2;
+    private TextView text_view_points_player_2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +36,14 @@ public class MatchActivity extends AppCompatActivity {
         current_activity = this;
 
         text_view_player_1 = (TextView) findViewById(R.id.activity_match_name_player_1);
+        text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
+        text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
+        text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
+
         text_view_player_2 = (TextView) findViewById(R.id.activity_match_name_player_2);
+        text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
+        text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
+        text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
 
         Intent i = getIntent();
 
@@ -65,6 +84,33 @@ public class MatchActivity extends AppCompatActivity {
         if (match != null) {
             text_view_player_1.setText(match.getPlayer_1().getFirst_name() + " " + match.getPlayer_1().getSurname());
             text_view_player_2.setText(match.getPlayer_2().getFirst_name() + " " + match.getPlayer_2().getSurname());
+
+            Points points = match.getPoints();
+
+            text_view_sets_player_1.setText(points.getSets().get(0).toString());
+            text_view_sets_player_2.setText(points.getSets().get(1).toString());
+
+            int numSet;
+            switch (points.getSets().size()){
+                case 2:
+                    numSet = 0;
+                    break;
+                case 4:
+                    numSet = 1;
+                    break;
+                case 6:
+                    numSet = 2;
+                    break;
+                default:
+                    numSet = 0;
+            }
+
+            text_view_games_player_1.setText(points.getGames().get(numSet).get(0).toString());
+            text_view_games_player_2.setText(points.getGames().get(numSet).get(1).toString());
+
+            text_view_points_player_1.setText(points.getExchange().get(0).toString());
+            text_view_points_player_2.setText(points.getExchange().get(1).toString());
+
         }
     }
 }

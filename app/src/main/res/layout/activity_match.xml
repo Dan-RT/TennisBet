@@ -21,11 +21,25 @@
                     android:layout_marginLeft="140dp"
                     android:text="player 1"/>
             <TextView
-                    android:id="@+id/activity_match_score_player_1"
+                    android:id="@+id/activity_match_sets_player_1"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:layout_marginLeft="30dp"
                     android:text="6"/>
+
+            <TextView
+                android:id="@+id/activity_match_games_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:text="6"/>
+
+            <TextView
+                android:id="@+id/activity_match_points_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:text="6"/>
 
         </LinearLayout>
 
@@ -42,11 +56,25 @@
                 android:text="player 2"/>
 
         <TextView
-                android:id="@+id/activity_match_score_player_2"
+                android:id="@+id/activity_match_sets_player_2"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_marginLeft="30dp"
                 android:text="4"/>
+
+        <TextView
+            android:id="@+id/activity_match_games_player_2"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginLeft="30dp"
+            android:text="4"/>
+
+        <TextView
+            android:id="@+id/activity_match_points_player_2"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginLeft="30dp"
+            android:text="4"/>
 
     </LinearLayout>
 
