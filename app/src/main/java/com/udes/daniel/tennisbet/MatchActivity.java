@@ -18,6 +18,7 @@ public class MatchActivity extends AppCompatActivity {
 
     private MatchActivity current_activity;
     private Match match;
+    private TextView text_view_time;
     private TextView text_view_player_1;
     private TextView text_view_sets_player_1;
     private TextView text_view_games_player_1;
@@ -28,12 +29,13 @@ public class MatchActivity extends AppCompatActivity {
     private TextView text_view_games_player_2;
     private TextView text_view_points_player_2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
         current_activity = this;
+
+        text_view_time = findViewById(R.id.activity_match_time);
 
         text_view_player_1 = (TextView) findViewById(R.id.activity_match_name_player_1);
         text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
@@ -82,6 +84,8 @@ public class MatchActivity extends AppCompatActivity {
 
     private void update_UI(){
         if (match != null) {
+            text_view_time.setText(Integer.toString(match.getMatch_time()));
+
             text_view_player_1.setText(match.getPlayer_1().getFirst_name() + " " + match.getPlayer_1().getSurname());
             text_view_player_2.setText(match.getPlayer_2().getFirst_name() + " " + match.getPlayer_2().getSurname());
 
