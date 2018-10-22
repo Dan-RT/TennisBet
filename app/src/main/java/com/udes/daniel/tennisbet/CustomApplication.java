@@ -52,27 +52,18 @@ public class CustomApplication extends Application {
         return this.ListMatchs.get(id);
     }
 
-    public static ArrayList<Match> createListMatchFromJSon (JSONObject obj) {
+    public static ArrayList<Match> createListMatchFromJSon (JSONArray obj) {
 
-        JSONArray matchs_json = null;
         ArrayList<Match> ListMatchs = new ArrayList<Match>();
 
-        try {
-            matchs_json = (JSONArray) obj.get("matchs");
-            Log.i("matchs_json : ", matchs_json.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (matchs_json != null) {
+        if (obj != null) {
 
             try {
-                for (int i = 0 ; i < matchs_json.length(); i++) {
+                for (int i = 0 ; i < obj.length(); i++) {
 
-                    JSONObject ListMatchsJSon = matchs_json.getJSONObject(i);
+                    JSONObject match_json = obj.getJSONObject(i);
 
-                    JSONObject match_json = ListMatchsJSon.getJSONObject(String.valueOf(i));
-                    Match match = new Match(match_json);
+                    Match match = new Match(match_json, i);
 
                     ListMatchs.add(match);
                 }

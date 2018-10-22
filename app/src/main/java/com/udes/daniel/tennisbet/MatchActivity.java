@@ -45,7 +45,7 @@ public class MatchActivity extends AppCompatActivity {
         AsyncServerRequest request = new AsyncServerRequest(current_activity);
 
         ArrayList<Match> tmp =  new ArrayList<Match>();
-        String URL = "http://10.0.2.2:3000/match/" + match.getId();
+        String URL = "http://10.0.2.2:3000/parties/" + match.getId();
 
         try {
             tmp = request.execute(URL).get();

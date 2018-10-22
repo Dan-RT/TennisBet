@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Match> tmp =  new ArrayList<Match>();
         try {
-            tmp = request.execute("http://10.0.2.2:3000/ListMatchs").get();
+            tmp = request.execute("http://10.0.2.2:3000/parties").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

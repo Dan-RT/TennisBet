@@ -36,6 +36,13 @@ class Pointage {
     }
   }
 
+  getPoints(id) {
+    if (id == 0 || id == 1) {
+      //return this.echange[id];
+      return this.manches[id];
+    }
+  }
+
   toJSON () {
     return {
       'manches': this.manches,

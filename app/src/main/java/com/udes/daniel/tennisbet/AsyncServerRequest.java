@@ -46,14 +46,19 @@ public class AsyncServerRequest extends AsyncTask<String, Void, ArrayList<Match>
                 urlConnection.disconnect();
         }
 
-        JSONObject obj = null;
+        Log.i("DATA RECEIVED", result.toString());
+
+        if (result.charAt(0) != '[') {
+            result = "[" + result + "]";
+        }
+
+        JSONArray obj = null;
         try {
-            obj = new JSONObject(result);
+            obj = new JSONArray(result);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        Log.i("DATA RECEIVED", obj.toString());
 
         return CustomApplication.createListMatchFromJSon(obj);
     }

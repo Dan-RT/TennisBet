@@ -1,8 +1,7 @@
 const Pointage = require('./pointage.js');
 
 class Partie {
-  constructor (id, joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {
-    this.id = id;
+  constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {
     this.joueur1 = joueur1;
     this.joueur2 = joueur2;
     this.terrain = terrain;
@@ -18,24 +17,35 @@ class Partie {
   }
 
   jouerTour () {
-    let contestationReussi = false;
-    if ((Math.random() * 100) < 3) { // 3% de contestation
-      if (!Partie.contester()) {
-        const contestant = Math.floor(Math.random() * 2);
-        this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
-        console.log('contestation echouee');
-      } else {
-        contestationReussi = true;
-        console.log('contestation reussie');
+    //setTimeout(function() { 
+      let contestationReussi = false;
+      if ((Math.random() * 100) < 3) { // 3% de contestation
+        if (!Partie.contester()) {
+          const contestant = Math.floor(Math.random() * 2);
+          this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
+          console.log('contestation echouee');
+        } else {
+          contestationReussi = true;
+          console.log('contestation reussie');
+        }
       }
-    }
 
-    if (!contestationReussi) {
-      this.pointage.ajouterPoint(Math.floor(Math.random() * 2));
-    }
-    this.temps_partie += Math.floor(Math.random() * 60); // entre 0 et 60 secondes entre chaque point
-    this.vitesse_dernier_service = Math.floor(Math.random() * (250 - 60 + 1)) + 60; // entre 60 et 250 km/h
-    this.nombre_coup_dernier_echange = Math.floor(Math.random() * (30 - 1 + 1)) + 1; // entre 1 et 30 coups par échange
+      if (!contestationReussi) {
+        this.pointage.ajouterPoint(Math.floor(Math.random() * 2));
+      }
+      this.temps_partie += Math.floor(Math.random() * 60); // entre 0 et 60 secondes entre chaque point
+      this.vitesse_dernier_service = Math.floor(Math.random() * (250 - 60 + 1)) + 60; // entre 60 et 250 km/h
+      this.nombre_coup_dernier_echange = Math.floor(Math.random() * (30 - 1 + 1)) + 1; // entre 1 et 30 coups par échange
+  
+      //console.log("\nPoint joué\n");
+    //}, 5000);
+    this.afficherPoints();
+  }
+
+
+  afficherPoints() {
+    console.log(this.joueur1.toString() + " " + this.pointage.getPoints(0));
+    console.log(this.joueur2.toString() + " " + this.pointage.getPoints(1) + "\n");
   }
 
   static contester () {
@@ -56,7 +66,6 @@ class Partie {
 
   toJSON () {
     return {
-      'id': this.id,
       'joueur1': this.joueur1,
       'joueur2': this.joueur2,
       'terrain': this.terrain,

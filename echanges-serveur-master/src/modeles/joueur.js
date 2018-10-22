@@ -6,6 +6,10 @@ class Joueur {
     this.rang = rang;
     this.pays = pays;
   }
+
+  toString() {
+  	return this.prenom + " " + this.nom;
+  }
 }
 
 module.exports = Joueur;
