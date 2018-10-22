@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class UpdateService extends Service {
 
@@ -22,7 +24,7 @@ public class UpdateService extends Service {
 
     private CustomApplication application;
 
-    static final int DELAY = 60000;
+    static final int DELAY = 6000;
     private boolean runFlag = false;
     private Updater updater;
 
@@ -74,12 +76,13 @@ public class UpdateService extends Service {
         @Override
         public void run(){
             UpdateService updateService = UpdateService.this;
+
             while (updateService.runFlag){
                 Log.i("CIO", "UpdateService : Running !");
                 HttpURLConnection urlConnection = null;
-                Match match = null;
+                ArrayList<Match> listMatchs = null;
                 try{
-                    String urlString = "http://10.0.2.2:3000/match/" + id_match;
+                    String urlString = "http://10.0.2.2:3000/parties/";
                     URL url = new URL(urlString);
 
                     urlConnection = (HttpURLConnection) url.openConnection(); // Open
@@ -87,11 +90,10 @@ public class UpdateService extends Service {
 
                     String result = AsyncServerRequest.readStream(in); // Read stream
 
-                    JSONObject matchObj = new JSONObject(result);
+                    JSONArray matchObj = new JSONArray(result);
 
-                    match = CustomApplication.createListMatchFromJSon(matchObj).get(0);
-
-                    application.updateMatch(match);
+                    listMatchs = CustomApplication.createListMatchFromJSon(matchObj);
+                    application.updateListMatchs(listMatchs);
 
                     Thread.sleep(DELAY);
                 }

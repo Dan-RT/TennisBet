@@ -1,6 +1,8 @@
 package com.udes.daniel.tennisbet;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,13 +12,23 @@ import java.util.ArrayList;
 
 public class CustomApplication extends Application {
 
+    private Context context;
+
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
+    private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
+    private NotificationManager notificationManager;
+
     private double bet;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // Required initialization logic here!
+        this.context = getApplicationContext();
+        this.notificationManager = new NotificationManager(context);
+
+        //Launches service
+        Intent intent = new Intent(context, UpdateService.class);
+        startService(intent);
     }
 
     public double getBet() {
@@ -35,13 +47,11 @@ public class CustomApplication extends Application {
         this.ListMatchs = listMatchs;
     }
 
-    public void updateMatch(Match match) {
-        for (Match prevMatch:ListMatchs) {
-            if (prevMatch.getId() == match.getId()) {
-                prevMatch = match;
-                //si jamais y'a un bug c'est ici
-            }
-        }
+    public void updateListMatchs(ArrayList<Match> newListMatchs) {
+        this.PrevListMatchs = this.ListMatchs;
+        this.ListMatchs = newListMatchs;
+        notificationManager.determineChanges(PrevListMatchs, ListMatchs);
+        //notificationManager.triggerSetNotification(ListMatchs.get(0), ListMatchs.get(0).getPlayer_1());
     }
 
     public void addMatch(Match match) {

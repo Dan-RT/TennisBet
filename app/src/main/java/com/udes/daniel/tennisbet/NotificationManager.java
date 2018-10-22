@@ -11,21 +11,15 @@ import java.util.ArrayList;
 
 public class NotificationManager {
 
-    private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
-    private ArrayList<Match> ListMatchs = new ArrayList<Match>();
     private Context context;
 
-    public NotificationManager (Context context, ArrayList<Match> prevListMatchs, ArrayList<Match> listMatchs) {
+    public NotificationManager (Context context) {
         this.context = context;
-        this.PrevListMatchs = prevListMatchs;
-        this.ListMatchs = listMatchs;
-
-        determineChanges();
     }
 
-    public void determineChanges() {
+    public void determineChanges(ArrayList<Match> PrevListMatchs, ArrayList<Match> ListMatchs) {
         for (Match prevMatch:PrevListMatchs) {
-            for (Match match:PrevListMatchs) {
+            for (Match match:ListMatchs) {
                 if (prevMatch.getId() == match.getId()) {
                     int set = setWon(prevMatch.getPoints(), match.getPoints());
                     int contest = contestationDone(prevMatch.getContests(), match.getContests());
@@ -88,8 +82,12 @@ public class NotificationManager {
         triggerNotification(match,"Contest by " + playerContesting.toString());
     }
 
-    private void triggerSetNotification (Match match, Player playerContesting) {
-        triggerNotification(match,"Set won by " + playerContesting.toString());
+    public void triggerSetNotification (Match match, Player playerContesting) {
+        try {
+            triggerNotification(match,"Set won by " + playerContesting.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void triggerNotification (Match match, String text) {
@@ -102,7 +100,7 @@ public class NotificationManager {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, null)
-                .setSmallIcon(0)
+                .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("Tennis Match Update")
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

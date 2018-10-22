@@ -54,11 +54,6 @@ public class MatchActivity extends AppCompatActivity {
 
         //Match match = (Match) i.getParcelableExtra("match_chosen");
         refresh_data();
-
-        //Launch service
-        Intent intent = new Intent(current_activity, UpdateService.class);
-        intent.putExtra("id_match",match.getId());
-        startService(intent);
     }
 
     private void refresh_data () {
@@ -95,14 +90,14 @@ public class MatchActivity extends AppCompatActivity {
             text_view_sets_player_2.setText(points.getSets().get(1).toString());
 
             int numSet;
-            switch (points.getSets().size()){
-                case 2:
+            switch (points.getGames().size()){
+                case 1:
                     numSet = 0;
                     break;
-                case 4:
+                case 2:
                     numSet = 1;
                     break;
-                case 6:
+                case 3:
                     numSet = 2;
                     break;
                 default:
