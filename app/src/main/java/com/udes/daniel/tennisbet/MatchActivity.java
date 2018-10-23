@@ -26,11 +26,13 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
     private TextView text_view_sets_player_1;
     private TextView text_view_games_player_1;
     private TextView text_view_points_player_1;
+    private TextView text_view_contest_player_1;
 
     private TextView text_view_player_2;
     private TextView text_view_sets_player_2;
     private TextView text_view_games_player_2;
     private TextView text_view_points_player_2;
+    private TextView text_view_contest_player_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +45,17 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         text_view_time = findViewById(R.id.activity_match_time);
 
-        text_view_player_1 = (TextView) findViewById(R.id.activity_match_name_player_1);
+        text_view_player_1 = findViewById(R.id.activity_match_name_player_1);
         text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
         text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
         text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
+        text_view_contest_player_1 = findViewById(R.id.activity_match_contest_player_1);
 
-        text_view_player_2 = (TextView) findViewById(R.id.activity_match_name_player_2);
+        text_view_player_2 = findViewById(R.id.activity_match_name_player_2);
         text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
         text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
         text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
+        text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
 
         Intent i = getIntent();
 
@@ -123,6 +127,9 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
             text_view_points_player_1.setText(points.getExchange().get(0).toString());
             text_view_points_player_2.setText(points.getExchange().get(1).toString());
+
+            text_view_contest_player_1.setText(match.getContests().get(0).toString());
+            text_view_contest_player_2.setText(match.getContests().get(1).toString());
 
         }
     }
