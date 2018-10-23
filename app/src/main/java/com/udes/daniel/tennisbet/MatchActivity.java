@@ -43,20 +43,6 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         setContentView(R.layout.activity_match);
         current_activity = this;
-//
-//        text_view_time = findViewById(R.id.activity_match_time);
-//
-//        text_view_player_1 = findViewById(R.id.activity_match_name_player_1);
-//        text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
-//        text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
-//        text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
-//        text_view_contest_player_1 = findViewById(R.id.activity_match_contest_player_1);
-//
-//        text_view_player_2 = findViewById(R.id.activity_match_name_player_2);
-//        text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
-//        text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
-//        text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
-//        text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
 
         Intent i = getIntent();
         match = new Match();
@@ -68,13 +54,6 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
         this.setElementView();
         refresh_data();
 
-//        Button refresh_button = findViewById(R.id.activity_match_refresh_button);
-//        refresh_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                refresh_data();
-//            }
-//        });
     }
 
     private void setElementView () {
@@ -132,7 +111,8 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
     private void update_UI(){
         if (match != null) {
-            text_view_time.setText(Integer.toString(match.getMatch_time()));
+            //text_view_time.setText(Integer.toString(match.getMatch_time()));
+            text_view_time.setText(this.getTime(match.getMatch_time()));
 
             text_view_player_1.setText(match.getPlayer_1().getFirst_name() + " " + match.getPlayer_1().getSurname());
             text_view_player_2.setText(match.getPlayer_2().getFirst_name() + " " + match.getPlayer_2().getSurname());
@@ -183,10 +163,20 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
                 return 0;
         }
     }
+
+    private String getTime (int totalSecond) {
+        int hours = (int) totalSecond / 3600;
+        int minutes = (totalSecond % 3600) / 60;
+        int seconds = totalSecond - minutes * 60 - hours * 3600;
+
+        return hours + "h " + minutes + "min " + seconds + "s";
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //https://developer.android.com/guide/topics/resources/runtime-changes#HandlingTheChange
         super.onConfigurationChanged(newConfig);
+
         Log.i("CIO", "Match Activity : Configuration changed ! ");
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {

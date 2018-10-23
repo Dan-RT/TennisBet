@@ -45,30 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("CIO", "MainActivity : onCreate !");
 
-//        test_TextView = (TextView) findViewById(R.id.activity_main_test_Tewt_View);
-//        listView_match = (ListView) findViewById(R.id.activity_main_list_match);
-
         retrieve_data();
         this.setListView();
-//        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
-//        listView_match.setAdapter(adapter);
-//
-//        listView_match.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                launch_match(position);
-//            }
-//        });
-//
-//        final SwipeRefreshLayout swipeRefresh = findViewById(R.id.swiperefresh);
-//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refresh_data();
-//                swipeRefresh.setRefreshing(false);
-//            }
-//        });
-
     }
 
     private void setListView () {
