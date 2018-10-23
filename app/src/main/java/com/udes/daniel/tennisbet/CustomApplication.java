@@ -1,9 +1,11 @@
 package com.udes.daniel.tennisbet;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +20,8 @@ public class CustomApplication extends Application {
     private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
     private NotificationManager notificationManager;
     private ArrayList<UpdateListMatchsListener> listeners = new ArrayList<UpdateListMatchsListener>();
-
+    private boolean connected = false;
+    private boolean serviceAlive = false;
 
     private double bet;
 
@@ -28,9 +31,7 @@ public class CustomApplication extends Application {
         this.context = getApplicationContext();
         this.notificationManager = new NotificationManager(context);
 
-        //Launches service
-        Intent intent = new Intent(context, UpdateService.class);
-        startService(intent);
+        launchService();
     }
 
     public double getBet() {
@@ -56,6 +57,14 @@ public class CustomApplication extends Application {
         //notificationManager.triggerSetNotification(ListMatchs.get(0), ListMatchs.get(0).getPlayer_1());
 
         notifyListeners();
+    }
+
+    private void launchService() {
+        //Launches service
+        Intent intent = new Intent(context, UpdateService.class);
+        startService(intent);
+        setServiceAlive(true);
+        Log.i("SERVICE", "Service launched");
     }
 
     public void addMatch(Match match) {
@@ -88,8 +97,21 @@ public class CustomApplication extends Application {
         return ListMatchs;
     }
 
+    private void connectionToaster(boolean activeConnection) {
+        final Context context = getApplicationContext();
+        CharSequence text = "";
+        final int duration = Toast.LENGTH_SHORT;
 
+        if (activeConnection) {
+            text = "Online";
+        } else {
+            text = "Offline mode";
+        }
 
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+    }
 
     /*      LISTENERS HANDLING        */
 
@@ -107,5 +129,27 @@ public class CustomApplication extends Application {
     public void removeListMatchsListener(UpdateListMatchsListener toRemove) {
         listeners.remove(toRemove);
         Log.i("LISTENER", "MatchActivity unsubscribed");
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean change) {
+        if (this.connected != change) {
+            this.connected = change;
+            connectionToaster(change);
+        }
+        if (connected && !serviceAlive) {
+            launchService();
+        }
+    }
+
+    public boolean isServiceAlive() {
+        return serviceAlive;
+    }
+
+    public void setServiceAlive(boolean serviceAlive) {
+        this.serviceAlive = serviceAlive;
     }
 }

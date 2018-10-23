@@ -58,12 +58,12 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
         text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
 
         Intent i = getIntent();
-
         match = new Match();
         match.setId(i.getIntExtra("id_match",0));
         this.id = match.getId();
 
-        //Match match = (Match) i.getParcelableExtra("match_chosen");
+        match = application.getMatch(match.getId());
+
         refresh_data();
     }
 
@@ -87,11 +87,15 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         try {
             tmp = request.execute(URL).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (tmp != null) {
+            application.setConnected(true);
             match = tmp.get(0);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } else {
+            application.setConnected(false);
         }
     }
 
