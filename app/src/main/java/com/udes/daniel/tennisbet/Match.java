@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Match implements Parcelable {
     private int id;
     private Player player_1;
+    private double bet_amount = 0;
     private Player player_2;
     private String tournament_name;
     private int pitch;
@@ -119,6 +120,14 @@ public class Match implements Parcelable {
         }
     };
 
+    public double getBet_amount() {
+        return bet_amount;
+    }
+
+    public void AddTo_bet_amount(double bet)
+    {
+        bet_amount += bet;
+    }
     public int getId() {
         return id;
     }
