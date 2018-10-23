@@ -99,7 +99,7 @@ public class Player implements Parcelable {
 
     @Override
     public String toString() {
-        return first_name + " " + surname ;
+        return this.first_name + " " + this.surname ;
     }
 
 }

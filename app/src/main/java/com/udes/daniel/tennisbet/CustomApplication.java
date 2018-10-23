@@ -1,7 +1,11 @@
 package com.udes.daniel.tennisbet;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,13 +14,24 @@ import java.util.ArrayList;
 
 public class CustomApplication extends Application {
 
+    private Context context;
+
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
+    private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
+    private NotificationManager notificationManager;
+    private ArrayList<UpdateListMatchsListener> listeners = new ArrayList<UpdateListMatchsListener>();
+    private boolean connected = false;
+    private boolean serviceAlive = false;
+
     private double bet;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // Required initialization logic here!
+        this.context = getApplicationContext();
+        this.notificationManager = new NotificationManager(context);
+
+        launchService();
     }
 
     public double getBet() {
@@ -35,13 +50,21 @@ public class CustomApplication extends Application {
         this.ListMatchs = listMatchs;
     }
 
-    public void updateMatch(Match match) {
-        for (Match prevMatch:ListMatchs) {
-            if (prevMatch.getId() == match.getId()) {
-                prevMatch = match;
-                //si jamais y'a un bug c'est ici
-            }
-        }
+    public void updateListMatchs(ArrayList<Match> newListMatchs) {
+        this.PrevListMatchs = this.ListMatchs;
+        this.ListMatchs = newListMatchs;
+        notificationManager.determineChanges(PrevListMatchs, ListMatchs);
+        //notificationManager.triggerSetNotification(ListMatchs.get(0), ListMatchs.get(0).getPlayer_1());
+
+        notifyListeners();
+    }
+
+    private void launchService() {
+        //Launches service
+        Intent intent = new Intent(context, UpdateService.class);
+        startService(intent);
+        setServiceAlive(true);
+        Log.i("SERVICE", "Service launched");
     }
 
     public void addMatch(Match match) {
@@ -52,27 +75,18 @@ public class CustomApplication extends Application {
         return this.ListMatchs.get(id);
     }
 
-    public static ArrayList<Match> createListMatchFromJSon (JSONObject obj) {
+    public static ArrayList<Match> createListMatchFromJSon (JSONArray obj) {
 
-        JSONArray matchs_json = null;
         ArrayList<Match> ListMatchs = new ArrayList<Match>();
 
-        try {
-            matchs_json = (JSONArray) obj.get("matchs");
-            Log.i("matchs_json : ", matchs_json.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (matchs_json != null) {
+        if (obj != null) {
 
             try {
-                for (int i = 0 ; i < matchs_json.length(); i++) {
+                for (int i = 0 ; i < obj.length(); i++) {
 
-                    JSONObject ListMatchsJSon = matchs_json.getJSONObject(i);
+                    JSONObject match_json = obj.getJSONObject(i);
 
-                    JSONObject match_json = ListMatchsJSon.getJSONObject(String.valueOf(i));
-                    Match match = new Match(match_json);
+                    Match match = new Match(match_json, i);
 
                     ListMatchs.add(match);
                 }
@@ -81,5 +95,61 @@ public class CustomApplication extends Application {
             }
         }
         return ListMatchs;
+    }
+
+    private void connectionToaster(boolean activeConnection) {
+        final Context context = getApplicationContext();
+        CharSequence text = "";
+        final int duration = Toast.LENGTH_SHORT;
+
+        if (activeConnection) {
+            text = "Online";
+        } else {
+            text = "Offline mode";
+        }
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+    }
+
+    /*      LISTENERS HANDLING        */
+
+    private void notifyListeners() {
+        Log.i("INFO","Notifying UpdateListMatchsListener.");
+        for (UpdateListMatchsListener listener : listeners) {
+            listener.newListMatchsUpdate(ListMatchs);
+        }
+    }
+
+    public void addListMatchsListener(UpdateListMatchsListener toAdd) {
+        listeners.add(toAdd);
+    }
+
+    public void removeListMatchsListener(UpdateListMatchsListener toRemove) {
+        listeners.remove(toRemove);
+        Log.i("LISTENER", "MatchActivity unsubscribed");
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean change) {
+        if (this.connected != change) {
+            this.connected = change;
+            connectionToaster(change);
+        }
+        if (connected && !serviceAlive) {
+            launchService();
+        }
+    }
+
+    public boolean isServiceAlive() {
+        return serviceAlive;
+    }
+
+    public void setServiceAlive(boolean serviceAlive) {
+        this.serviceAlive = serviceAlive;
     }
 }

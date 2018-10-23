@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
+    private CustomApplication application;
     private MainActivity current_activity;
     private TextView test_TextView;
     private ListView listView_match;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.application = (CustomApplication) getApplication();
         setContentView(R.layout.activity_main);
         current_activity = this;
 
@@ -78,17 +80,19 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Match> tmp =  new ArrayList<Match>();
         try {
-            tmp = request.execute("http://10.0.2.2:3000/ListMatchs").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            tmp = request.execute("http://10.0.2.2:3000/parties").get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
-        ListMatchs.clear();
-        //ListMatchs = tmp;
-        for (Match match: tmp) {
-            ListMatchs.add(match);
+        if (tmp != null) {
+            application.setConnected(true);
+            ListMatchs.clear();
+            for (Match match: tmp) {
+                ListMatchs.add(match);
+            }
+        } else {
+            application.setConnected(false);
         }
 
     }
@@ -130,7 +134,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() { super.onRestart(); Log.i("CIO", "MainActivity : onRestart !"); }
 
     @Override
-    protected void onStart() { super.onStart(); Log.i("CIO", "MainActivity : onStart !"); }
+    protected void onStart() {
+        super.onStart();
+        Log.i("CIO", "MainActivity : onStart !");
+        retrieve_data();
+    }
 
     @Override
     protected void onResume() { super.onResume(); Log.i("CIO", "MainActivity : onResume !"); }

@@ -1,7 +1,7 @@
 const Partie = require('./modeles/partie');
 const Joueur = require('./modeles/joueur');
 
-const modificateurVitesse = Math.max(process.argv[2], 1);
+const modificateurVitesse = 1; //Math.max(process.argv[2], 1);
 
 const listePartie = [];
 
@@ -14,6 +14,7 @@ const demarrer = function () {
     for (const partie in listePartie) {
       if (listePartie[partie].tick_debut === tick) {
         demarrerPartie(listePartie[partie]);
+        console.log("\nPartie démarrée\n");
       }
     }
 
@@ -23,7 +24,10 @@ const demarrer = function () {
 
 function demarrerPartie (partie) {
   const timer = setInterval(function () {
+
     partie.jouerTour();
+    console.log("\nPoint joué\n");
+
     if (partie.estTerminee()) {
       clearInterval(timer);
     }

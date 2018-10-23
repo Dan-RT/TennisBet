@@ -10,47 +10,119 @@
               android:layout_marginTop="25dp">
 
 
-        <LinearLayout
-                android:orientation="horizontal"
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/activity_match_name_player_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="140dp"
-                    android:text="player 1"/>
-            <TextView
-                    android:id="@+id/activity_match_score_player_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="6"/>
+                android:layout_height="35dp"
+                android:text="Temps de jeu : "/>
 
-        </LinearLayout>
+        <TextView
+                android:id="@+id/activity_match_time"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="time"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/activity_match_contests"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="285dp"
+                android:text="C"/>
+    </LinearLayout>
+
+
 
 
     <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/activity_match_name_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="70dp"
+                android:text="player 1"/>
+        <TextView
+                android:id="@+id/activity_match_sets_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:text="6"/>
+
+        <TextView
+            android:id="@+id/activity_match_games_player_1"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:text="6"/>
+
+        <TextView
+            android:id="@+id/activity_match_points_player_1"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:text="6"/>
+
+        <TextView
+                android:id="@+id/activity_match_contest_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="40dp"
+                android:text="3"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/activity_match_name_player_2"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginLeft="140dp"
+                android:layout_marginLeft="70dp"
                 android:text="player 2"/>
 
         <TextView
-                android:id="@+id/activity_match_score_player_2"
+                android:id="@+id/activity_match_sets_player_2"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="30dp"
                 android:text="4"/>
 
+        <TextView
+            android:id="@+id/activity_match_games_player_2"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:text="4"/>
+
+        <TextView
+            android:id="@+id/activity_match_points_player_2"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:text="4"/>
+
+        <TextView
+                android:id="@+id/activity_match_contest_player_2"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginLeft="40dp"
+                android:text="3"/>
+
     </LinearLayout>
-
-
 
     <Button
             android:id="@+id/activity_match_bet_button"

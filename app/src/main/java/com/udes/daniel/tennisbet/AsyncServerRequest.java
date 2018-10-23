@@ -30,6 +30,7 @@ public class AsyncServerRequest extends AsyncTask<String, Void, ArrayList<Match>
         URL url = null;
         HttpURLConnection urlConnection = null;
         String result = null;
+
         Log.i("URL", strings[0]);
         try {
             url = new URL(strings[0]);
@@ -37,31 +38,38 @@ public class AsyncServerRequest extends AsyncTask<String, Void, ArrayList<Match>
             InputStream in = new BufferedInputStream(urlConnection.getInputStream()); // Stream
 
             result = readStream(in); // Read stream
-        }
-        catch (MalformedURLException e) { e.printStackTrace(); }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
 
-        JSONObject obj = null;
-        try {
-            obj = new JSONObject(result);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (result != null) {
+            Log.i("DATA RECEIVED", result.toString());
+
+            if (result.charAt(0) != '[') {
+                result = "[" + result + "]";
+            }
+
+            JSONArray obj = null;
+            try {
+                obj = new JSONArray(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return CustomApplication.createListMatchFromJSon(obj);
+        } else {
+
+            //if connection refused
+            return null;
         }
-
-        Log.i("DATA RECEIVED", obj.toString());
-
-        return CustomApplication.createListMatchFromJSon(obj);
     }
 
     protected void onPostExecute(ArrayList<Match> s) {
-
-        System.out.println(s.toString());
-
+        if (s != null) {
+            Log.i("ASYNCTASK", s.toString());
+        }
     }
 
     public static String readStream(InputStream stream) {

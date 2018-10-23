@@ -2,6 +2,7 @@ package com.udes.daniel.tennisbet;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ public class Match implements Parcelable {
 
     public Match () {
         this.contests = new ArrayList<Integer>();
+        this.player_1 = new Player();
+        this.player_2 = new Player();
     }
 
     public Match (int id, Player player_1, Player player_2, String tournament_name, int pitch, String start_hour, Points points, int match_time, int server, int speed_last_serv, int nb_exchanges, int contest_p_1, int contest_p_2) {
@@ -45,10 +48,10 @@ public class Match implements Parcelable {
         this.contests.add(contest_p_2);
     }
 
-    public Match (JSONObject match_json) {
+    public Match (JSONObject match_json, int id) {
 
         try {
-            this.setId(match_json.getInt("id"));
+            this.setId(id);
 
             JSONObject player_1_json = (JSONObject) match_json.get("joueur1");
             Player player1 = new Player((String)player_1_json.get("prenom"), (String)player_1_json.get("nom"), (int)player_1_json.get("age"), (int) player_1_json.get("rang"), (String)player_1_json.get("pays"));
@@ -252,6 +255,11 @@ public class Match implements Parcelable {
 
     @Override
     public String toString() {
-        return  tournament_name + " - " + start_hour + "\n" + player_1.toString() + " - " + player_2.toString();
+        try {
+            return  tournament_name + " - " + start_hour + "\n" + player_1.toString() + " - " + player_2.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
