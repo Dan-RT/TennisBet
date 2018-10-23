@@ -17,6 +17,8 @@ public class CustomApplication extends Application {
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
     private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
     private NotificationManager notificationManager;
+    private ArrayList<UpdateListMatchsListener> listeners = new ArrayList<UpdateListMatchsListener>();
+
 
     private double bet;
 
@@ -52,6 +54,8 @@ public class CustomApplication extends Application {
         this.ListMatchs = newListMatchs;
         notificationManager.determineChanges(PrevListMatchs, ListMatchs);
         //notificationManager.triggerSetNotification(ListMatchs.get(0), ListMatchs.get(0).getPlayer_1());
+
+        notifyListeners();
     }
 
     public void addMatch(Match match) {
@@ -82,5 +86,26 @@ public class CustomApplication extends Application {
             }
         }
         return ListMatchs;
+    }
+
+
+
+
+    /*      LISTENERS HANDLING        */
+
+    private void notifyListeners() {
+        Log.i("INFO","Notifying UpdateListMatchsListener.");
+        for (UpdateListMatchsListener listener : listeners) {
+            listener.newListMatchsUpdate(ListMatchs);
+        }
+    }
+
+    public void addListMatchsListener(UpdateListMatchsListener toAdd) {
+        listeners.add(toAdd);
+    }
+
+    public void removeListMatchsListener(UpdateListMatchsListener toRemove) {
+        listeners.remove(toRemove);
+        Log.i("LISTENER", "MatchActivity unsubscribed");
     }
 }

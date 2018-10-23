@@ -14,11 +14,14 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MatchActivity extends AppCompatActivity {
+public class MatchActivity extends AppCompatActivity implements UpdateListMatchsListener {
 
+    private int id;
+    private CustomApplication application;
     private MatchActivity current_activity;
     private Match match;
     private TextView text_view_time;
+
     private TextView text_view_player_1;
     private TextView text_view_sets_player_1;
     private TextView text_view_games_player_1;
@@ -32,6 +35,9 @@ public class MatchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.application = (CustomApplication) getApplication();
+        this.application.addListMatchsListener(this);
+
         setContentView(R.layout.activity_match);
         current_activity = this;
 
@@ -51,9 +57,17 @@ public class MatchActivity extends AppCompatActivity {
 
         match = new Match();
         match.setId(i.getIntExtra("id_match",0));
+        this.id = match.getId();
 
         //Match match = (Match) i.getParcelableExtra("match_chosen");
         refresh_data();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application.removeListMatchsListener(this);
+        Log.i("CIO", "MatchActivity : onDestroy !");
     }
 
     private void refresh_data () {
@@ -111,5 +125,27 @@ public class MatchActivity extends AppCompatActivity {
             text_view_points_player_2.setText(points.getExchange().get(1).toString());
 
         }
+    }
+
+
+
+    @Override
+    public void newListMatchsUpdate(ArrayList<Match> ListMatchs) {
+        Log.i("LISTENER", "New data received");
+        Log.i("LISTENER", ListMatchs.get(this.id).toString());
+        this.match = ListMatchs.get(this.id);
+
+        try {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    update_UI();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
