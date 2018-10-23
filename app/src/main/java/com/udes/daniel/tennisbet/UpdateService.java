@@ -43,7 +43,7 @@ public class UpdateService extends Service {
         this.updater = new Updater();
         this.application = (CustomApplication) getApplication();
         Log.i("CIO", "UpdateService : onCreate !");
-
+        application.setServiceAlive(true);
     }
 
     @Override
@@ -78,10 +78,12 @@ public class UpdateService extends Service {
             UpdateService updateService = UpdateService.this;
 
             while (updateService.runFlag){
-                Log.i("CIO", "UpdateService : Running !");
+
+                Log.i("SERVICE", "Performing query");
                 HttpURLConnection urlConnection = null;
                 ArrayList<Match> listMatchs = null;
                 try{
+                    Thread.sleep(DELAY);
                     String urlString = "http://10.0.2.2:3000/parties/";
                     URL url = new URL(urlString);
 
@@ -94,23 +96,22 @@ public class UpdateService extends Service {
 
                     listMatchs = CustomApplication.createListMatchFromJSon(matchObj);
                     application.updateListMatchs(listMatchs);
-
-                    Thread.sleep(DELAY);
+                    //application.setConnected(true);
                 }
-                catch (MalformedURLException e) { e.printStackTrace(); }
+                catch (MalformedURLException | JSONException e) { e.printStackTrace(); }
                 catch (IOException e) {
-                    e.printStackTrace();
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                catch (InterruptedException e){
+                    //e.printStackTrace();
+                } catch (InterruptedException e){
+                    //e.printStackTrace();
                     updateService.runFlag = false;
-                }finally {
+                } finally {
                     if (urlConnection != null)
                         urlConnection.disconnect();
                 }
             }
+            //application.setConnected(false);
+            application.setServiceAlive(false);
+            Log.i("SERVICE", "Service stopped");
         }
     }
 }

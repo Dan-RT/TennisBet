@@ -19,7 +19,7 @@ class Partie {
   jouerTour () {
     
     let contestationReussi = false;
-    if ((Math.random() * 100) < 3) { // 3% de contestation
+    if ((Math.random() * 100) < 20) { // 3% de contestation
       if (!Partie.contester()) {
         const contestant = Math.floor(Math.random() * 2);
         this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);

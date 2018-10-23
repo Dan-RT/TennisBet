@@ -14,45 +14,56 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MatchActivity extends AppCompatActivity {
+public class MatchActivity extends AppCompatActivity implements UpdateListMatchsListener {
 
+    private int id;
+    private CustomApplication application;
     private MatchActivity current_activity;
     private Match match;
     private TextView text_view_time;
+
     private TextView text_view_player_1;
     private TextView text_view_sets_player_1;
     private TextView text_view_games_player_1;
     private TextView text_view_points_player_1;
+    private TextView text_view_contest_player_1;
 
     private TextView text_view_player_2;
     private TextView text_view_sets_player_2;
     private TextView text_view_games_player_2;
     private TextView text_view_points_player_2;
+    private TextView text_view_contest_player_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.application = (CustomApplication) getApplication();
+        this.application.addListMatchsListener(this);
+
         setContentView(R.layout.activity_match);
         current_activity = this;
 
         text_view_time = findViewById(R.id.activity_match_time);
 
-        text_view_player_1 = (TextView) findViewById(R.id.activity_match_name_player_1);
+        text_view_player_1 = findViewById(R.id.activity_match_name_player_1);
         text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
         text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
         text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
+        text_view_contest_player_1 = findViewById(R.id.activity_match_contest_player_1);
 
-        text_view_player_2 = (TextView) findViewById(R.id.activity_match_name_player_2);
+        text_view_player_2 = findViewById(R.id.activity_match_name_player_2);
         text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
         text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
         text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
+        text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
 
         Intent i = getIntent();
-
         match = new Match();
         match.setId(i.getIntExtra("id_match",0));
+        this.id = match.getId();
 
-        //Match match = (Match) i.getParcelableExtra("match_chosen");
+        match = application.getMatch(match.getId());
+
         refresh_data();
 
         Button refresh_button = findViewById(R.id.activity_match_refresh_button);
@@ -62,6 +73,13 @@ public class MatchActivity extends AppCompatActivity {
                 refresh_data();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application.removeListMatchsListener(this);
+        Log.i("CIO", "MatchActivity : onDestroy !");
     }
 
     private void refresh_data () {
@@ -77,11 +95,15 @@ public class MatchActivity extends AppCompatActivity {
 
         try {
             tmp = request.execute(URL).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (tmp != null) {
+            application.setConnected(true);
             match = tmp.get(0);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } else {
+            application.setConnected(false);
         }
     }
 
@@ -118,6 +140,31 @@ public class MatchActivity extends AppCompatActivity {
             text_view_points_player_1.setText(points.getExchange().get(0).toString());
             text_view_points_player_2.setText(points.getExchange().get(1).toString());
 
+            text_view_contest_player_1.setText(match.getContests().get(0).toString());
+            text_view_contest_player_2.setText(match.getContests().get(1).toString());
+
         }
+    }
+
+
+
+    @Override
+    public void newListMatchsUpdate(ArrayList<Match> ListMatchs) {
+        Log.i("LISTENER", "New data received");
+        Log.i("LISTENER", ListMatchs.get(this.id).toString());
+        this.match = ListMatchs.get(this.id);
+
+        try {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    update_UI();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
