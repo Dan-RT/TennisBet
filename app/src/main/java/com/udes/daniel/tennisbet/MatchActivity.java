@@ -54,6 +54,14 @@ public class MatchActivity extends AppCompatActivity {
 
         //Match match = (Match) i.getParcelableExtra("match_chosen");
         refresh_data();
+
+        Button refresh_button = findViewById(R.id.activity_match_refresh_button);
+        refresh_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refresh_data();
+            }
+        });
     }
 
     private void refresh_data () {

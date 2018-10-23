@@ -9,6 +9,11 @@
               android:orientation="vertical"
               android:layout_marginTop="25dp">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_match_refresh_button"
+        android:text="Actualiser"/>
 
     <LinearLayout
         android:orientation="horizontal"
