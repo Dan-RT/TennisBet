@@ -3,6 +3,7 @@ package com.udes.daniel.tennisbet;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.DataSetObserver;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -44,10 +45,34 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("CIO", "MainActivity : onCreate !");
 
-        test_TextView = (TextView) findViewById(R.id.activity_main_test_Tewt_View);
-        listView_match = (ListView) findViewById(R.id.activity_main_list_match);
+//        test_TextView = (TextView) findViewById(R.id.activity_main_test_Tewt_View);
+//        listView_match = (ListView) findViewById(R.id.activity_main_list_match);
 
         retrieve_data();
+        this.setListView();
+//        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
+//        listView_match.setAdapter(adapter);
+//
+//        listView_match.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                launch_match(position);
+//            }
+//        });
+//
+//        final SwipeRefreshLayout swipeRefresh = findViewById(R.id.swiperefresh);
+//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refresh_data();
+//                swipeRefresh.setRefreshing(false);
+//            }
+//        });
+
+    }
+
+    private void setListView () {
+        listView_match = (ListView) findViewById(R.id.activity_main_list_match);
 
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, ListMatchs);
         listView_match.setAdapter(adapter);
@@ -67,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 swipeRefresh.setRefreshing(false);
             }
         });
-
     }
 
     private void refresh_data () {
@@ -151,5 +175,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() { super.onDestroy(); Log.i("CIO", "MainActivity : onDestroy !"); }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //https://developer.android.com/guide/topics/resources/runtime-changes#HandlingTheChange
+        super.onConfigurationChanged(newConfig);
+
+        Log.i("CIO", "Main Activity : Configuration changed ! ");
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_main_land);
+            this.refresh_data();
+            this.setListView();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_main);
+            this.refresh_data();
+            this.setListView();
+        }
+    }
 
 }

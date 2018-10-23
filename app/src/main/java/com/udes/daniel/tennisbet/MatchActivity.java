@@ -1,6 +1,7 @@
 package com.udes.daniel.tennisbet;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,20 +43,20 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         setContentView(R.layout.activity_match);
         current_activity = this;
-
-        text_view_time = findViewById(R.id.activity_match_time);
-
-        text_view_player_1 = findViewById(R.id.activity_match_name_player_1);
-        text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
-        text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
-        text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
-        text_view_contest_player_1 = findViewById(R.id.activity_match_contest_player_1);
-
-        text_view_player_2 = findViewById(R.id.activity_match_name_player_2);
-        text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
-        text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
-        text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
-        text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
+//
+//        text_view_time = findViewById(R.id.activity_match_time);
+//
+//        text_view_player_1 = findViewById(R.id.activity_match_name_player_1);
+//        text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
+//        text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
+//        text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
+//        text_view_contest_player_1 = findViewById(R.id.activity_match_contest_player_1);
+//
+//        text_view_player_2 = findViewById(R.id.activity_match_name_player_2);
+//        text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
+//        text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
+//        text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
+//        text_view_contest_player_2 = findViewById(R.id.activity_match_contest_player_2);
 
         Intent i = getIntent();
         match = new Match();
@@ -64,7 +65,29 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         match = application.getMatch(match.getId());
 
+        this.setElementView();
         refresh_data();
+
+//        Button refresh_button = findViewById(R.id.activity_match_refresh_button);
+//        refresh_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                refresh_data();
+//            }
+//        });
+    }
+
+    private void setElementView () {
+        text_view_time = findViewById(R.id.activity_match_time);
+        text_view_player_1 = (TextView) findViewById(R.id.activity_match_name_player_1);
+        text_view_sets_player_1 = findViewById(R.id.activity_match_sets_player_1);
+        text_view_games_player_1 = findViewById(R.id.activity_match_games_player_1);
+        text_view_points_player_1 = findViewById(R.id.activity_match_points_player_1);
+
+        text_view_player_2 = (TextView) findViewById(R.id.activity_match_name_player_2);
+        text_view_sets_player_2 = findViewById(R.id.activity_match_sets_player_2);
+        text_view_games_player_2 = findViewById(R.id.activity_match_games_player_2);
+        text_view_points_player_2 = findViewById(R.id.activity_match_points_player_2);
 
         Button refresh_button = findViewById(R.id.activity_match_refresh_button);
         refresh_button.setOnClickListener(new View.OnClickListener() {
@@ -140,12 +163,42 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
             text_view_points_player_1.setText(points.getExchange().get(0).toString());
             text_view_points_player_2.setText(points.getExchange().get(1).toString());
 
-            text_view_contest_player_1.setText(match.getContests().get(0).toString());
-            text_view_contest_player_2.setText(match.getContests().get(1).toString());
+            text_view_points_player_1.setText(String.valueOf(this.getScore(points.getExchange().get(0))));
+            text_view_points_player_2.setText(String.valueOf(this.getScore(points.getExchange().get(1))));
 
         }
     }
 
+    private int getScore (int score) {
+        switch (score){
+            case 0 :
+                return 0;
+            case 1 :
+                return 15;
+            case 2 :
+                return 30;
+            case 3 :
+                return 40;
+            default :
+                return 0;
+        }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //https://developer.android.com/guide/topics/resources/runtime-changes#HandlingTheChange
+        super.onConfigurationChanged(newConfig);
+        Log.i("CIO", "Match Activity : Configuration changed ! ");
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_match_land);
+            this.setElementView();
+            this.refresh_data();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setContentView(R.layout.activity_match);
+            this.setElementView();
+            this.refresh_data();
+        }
+    }
 
 
     @Override
