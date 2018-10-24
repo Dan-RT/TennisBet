@@ -26,12 +26,11 @@ public class CustomApplication extends Application {
     private boolean connected = false;
     private boolean serviceAlive = false;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         this.context = getApplicationContext();
-        this.notificationManager = new NotificationManager(context);
+        this.notificationManager = new NotificationManager(context, this);
 
         launchService();
     }
@@ -154,8 +153,11 @@ public class CustomApplication extends Application {
     }
 
     public Bet getBetMatch(int id) {
+
         for (Bet tmp:BetMatch) {
             if (tmp.getIdMatch() == id) {
+                //Toast toast = Toast.makeText(context, "id : " + id + " id bet " + tmp.getIdMatch(), Toast.LENGTH_SHORT);
+                //toast.show();
                 return tmp;
             }
         }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.*;
@@ -76,18 +77,19 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
         match = new Match();
         match.setId(i.getIntExtra("id_match",0));
         this.id = match.getId();
+
         refresh_data();
 
-        //match = application.getMatch(match.getId());
-
-        Bet bet = new Bet();
+        match_bet_button = (Button) findViewById(R.id.activity_match_bet_button);
+        Bet bet = null;
         if (match != null) {
-            bet = application.getBetMatch(match.getId());
+            bet = application.getBetMatch(id);
+            Toast toast = Toast.makeText(context, "id : " +id, Toast.LENGTH_SHORT);
+            toast.show();
             if (bet != null) {
                 manageBetButton(match.getPlayerNameById(bet.getPlayer()),bet.getAmount());
             }
         }
-        match_bet_button = (Button) findViewById(R.id.activity_match_bet_button);
 
         //source : https://www.youtube.com/watch?v=oHW6_VP7_oM&feature=share
         match_bet_button.setOnClickListener(new View.OnClickListener(){
@@ -111,34 +113,34 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
                 radio_button_bet_player_2.setText(text_view_player_2.getText().toString());
                 // set dialog message
                 alertDialogBuilder
-                    .setCancelable(false)
-                    .setPositiveButton("Bet",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                int id_player = 0;
-                                LayoutInflater l = LayoutInflater.from(context);
-                                View ptView = l.inflate(R.layout.betting_dialog, null);
-                                // get user input and set it to result
-                                // edit text
-                                int selectedId = radio_group_players.getCheckedRadioButtonId();
-                                RadioButton PlayerButton = (RadioButton) ptView.findViewById(selectedId);
+                        .setCancelable(false)
+                        .setPositiveButton("Bet",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        int id_player = 0;
+                                        LayoutInflater l = LayoutInflater.from(context);
+                                        View ptView = l.inflate(R.layout.betting_dialog, null);
+                                        // get user input and set it to result
+                                        // edit text
+                                        int selectedId = radio_group_players.getCheckedRadioButtonId();
+                                        RadioButton PlayerButton = (RadioButton) ptView.findViewById(selectedId);
 
-                                if (selectedId == radio_button_bet_player_1.getId()) {
-                                    id_player = 1;
-                                } else if(selectedId == radio_button_bet_player_2.getId()){
-                                    id_player = 2;
-                                }
+                                        if (selectedId == radio_button_bet_player_1.getId()) {
+                                            id_player = 1;
+                                        } else if(selectedId == radio_button_bet_player_2.getId()){
+                                            id_player = 2;
+                                        }
 
-                                placeBet(id, id_player, Double.parseDouble(userInput.getText().toString()));
+                                        placeBet(match.getId(), id_player, Double.parseDouble(userInput.getText().toString()));
 
-                            }
-                        })
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
 
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
@@ -230,7 +232,6 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         try {
             runOnUiThread(new Runnable() {
-
                 @Override
                 public void run() {
                     update_UI();
@@ -244,40 +245,9 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
     private void placeBet(int id_match, int id_player, double amount) {
 
-
         final Bet bet = new Bet(id_match, id_player, amount);
 
-        new Thread(){
-            public void run(){
-
-                try {
-
-                    URL url = new URL("http://10.0.2.2:3000/parties/pari/");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-                    conn.connect();
-
-                    Log.i("POST REQUEST", bet.toJSon());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(URLEncoder.encode(bet.toJSon(), "UTF-8"));
-
-                    os.flush();
-                    os.close();
-
-                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
-                    Log.i("MSG" , conn.getResponseMessage());
-
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        new AsyncTaskPOSTrequest().execute("http://10.0.2.2:3000/parties/pari/", bet.toJSon());
 
         application.addBetMatch(bet);
         manageBetButton(match.getPlayerNameById(id_player), amount);

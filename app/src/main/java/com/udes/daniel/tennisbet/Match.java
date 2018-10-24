@@ -266,5 +266,8 @@ public class Match implements Parcelable {
         return "";
     }
 
+    public boolean isOver() {
+        return this.points.isFinal_();
+    }
 
 }

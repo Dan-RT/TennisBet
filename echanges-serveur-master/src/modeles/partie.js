@@ -14,6 +14,7 @@ class Partie {
     this.nombre_coup_dernier_echange = 0;
     this.constestation = [3, 3];
     this.tick_debut = tickDebut;
+    this.totalPari = 0;
   }
 
   jouerTour () {
@@ -40,7 +41,6 @@ class Partie {
     this.afficherPoints();
   }
 
-
   afficherPoints() {
     console.log(this.joueur1.toString() + " " + this.pointage.getPoints(0));
     console.log(this.joueur2.toString() + " " + this.pointage.getPoints(1) + "\n");
@@ -60,6 +60,19 @@ class Partie {
 
   estTerminee () {
     return this.pointage.final;
+  }
+
+  ajouterPari(montant) {
+    this.totalPari += montant;
+  }
+
+  montantTotalPari() {
+    return this.totalPari;
+  }
+
+  renvoyerGain(mise) {
+    var newMontantTotalPari = this.totalPari * 0.75;
+    return (mise/this.totalPari)*newMontantTotalPari;
   }
 
   toJSON () {

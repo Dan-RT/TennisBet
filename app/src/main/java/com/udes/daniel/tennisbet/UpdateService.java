@@ -28,7 +28,6 @@ public class UpdateService extends Service {
     private boolean runFlag = false;
     private Updater updater;
 
-    private int id_match;
 
     @Nullable
     @Override
@@ -52,7 +51,6 @@ public class UpdateService extends Service {
 
         this.updater.start();
         this.runFlag = true;
-        this.id_match = intent.getIntExtra("id_match",0);
         Log.i("CIO", "UpdateService : onStartCommand !");
         return  START_STICKY;
     }

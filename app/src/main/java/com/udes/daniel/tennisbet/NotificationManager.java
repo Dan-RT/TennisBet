@@ -1,25 +1,37 @@
 package com.udes.daniel.tennisbet;
 
+import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+
+import static com.udes.daniel.tennisbet.AsyncServerRequest.readStream;
 
 public class NotificationManager {
 
+    private CustomApplication application;
     private Context context;
+    private int id_notif = 0;
 
-    public NotificationManager (Context context) {
+    public NotificationManager (Context context, Application application) {
         this.context = context;
+        this.application = (CustomApplication) application;
     }
 
-    public void determineChanges(ArrayList<Match> PrevListMatchs, ArrayList<Match> ListMatchs) {
+    public void determineChanges(ArrayList<Match> PrevListMatchs, final ArrayList<Match> ListMatchs) {
         for (Match prevMatch:PrevListMatchs) {
-            for (Match match:ListMatchs) {
+            for (final Match match:ListMatchs) {
                 if (prevMatch.getId() == match.getId()) {
                     int set = setWon(prevMatch.getPoints(), match.getPoints());
                     int contest = contestationDone(prevMatch.getContests(), match.getContests());
@@ -40,6 +52,50 @@ public class NotificationManager {
                         } else {
                             triggerContestNotification(match, match.getPlayer_2());
                         }
+                    }
+
+                    if (match.isOver()) {
+
+
+                        new Thread() {
+                            public void run() {
+
+                                Bet bet = application.getBetMatch(match.getId());
+                                if (bet != null && !bet.isNotificationTriggered()) {
+                                    HttpURLConnection urlConnection = null;
+                                    try {
+                                        Log.i("INFO", "ON EST RENTRÉ DEDANS");
+                                        URL url = new URL("http://10.0.2.2:3000/parties/resultat/" + match.getId() + "/" + bet.getPlayer() + "/" + bet.getAmount());
+                                        urlConnection = (HttpURLConnection) url.openConnection(); // Open
+                                        InputStream in = new BufferedInputStream(urlConnection.getInputStream()); // Stream
+
+                                        String result = readStream(in); // Read stream
+                                        double gain = Double.valueOf(result);
+                                        bet.setNotificationTriggered(true);
+
+                                        if (gain > 0.0) {
+                                            triggerWinnerNotification(match, gain);
+                                        } else {
+                                            triggerLoserNotification(match);
+                                        }
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    } finally {
+                                        if (urlConnection != null)
+                                            urlConnection.disconnect();
+                                    }
+                                }
+                            }
+                        }.start();
+                        /*
+                        Faire une requête GET envoyant
+                            - id du match
+                            - id du player
+                            - montant misé
+                        Renvoyant:
+                            - somme gagné
+                        */
                     }
 
                 }
@@ -90,6 +146,22 @@ public class NotificationManager {
         }
     }
 
+    public void triggerWinnerNotification (Match match, double gain) {
+        try {
+            triggerNotification(match,"YOU HAVE WON " + gain + "$");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void triggerLoserNotification (Match match) {
+        try {
+            triggerNotification(match,"YOU ARE A LOSER, YOU HAVE WON NOTHING");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void triggerNotification (Match match, String text) {
         //https://developer.android.com/training/notify-user/build-notification#java
 
@@ -110,8 +182,9 @@ public class NotificationManager {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-// notificationId is a unique int for each notification that you must define
-        notificationManager.notify(0, mBuilder.build());
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(this.id_notif, mBuilder.build());
+        this.id_notif++;
     }
 
 }

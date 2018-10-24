@@ -10,6 +10,7 @@ public class Points implements Parcelable {
     private ArrayList<Integer> sets;
     private ArrayList<ArrayList<Integer>> games;
     private ArrayList<Integer> exchange;
+    private boolean final_ = false;
 
     public Points(){
         this.sets = new ArrayList<Integer>();
@@ -79,9 +80,6 @@ public class Points implements Parcelable {
     public void setExchange(ArrayList<Integer> exchange) {
         this.exchange = exchange;
     }
-
-    private boolean final_;
-
 
     public boolean isFinal_() {
         return final_;
