@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Tennis Bet</string>
     <string name="id_match"/>
+    <string name="bet">Bet</string>
+    <string name="player_1">player 1</string>
+    <string name="player_2">player 2</string>
 </resources>
