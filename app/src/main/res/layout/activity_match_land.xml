@@ -35,7 +35,9 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="350dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
         <TextView
                 android:id="@+id/activity_match_contests"
                 android:layout_width="wrap_content"
@@ -44,13 +46,11 @@
                 android:text="C"/>
     </LinearLayout>
 
-
-
-
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
         <TextView
                 android:id="@+id/activity_match_name_player_1"
                 android:layout_width="wrap_content"
@@ -91,7 +91,8 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
         <TextView
                 android:id="@+id/activity_match_name_player_2"
                 android:layout_width="wrap_content"
@@ -135,15 +136,8 @@
             android:layout_height="wrap_content"
             android:text="BET"
             android:gravity="center"
-            android:layout_marginLeft="130dp"/>
-
-    <TextView
-            android:id="@+id/display_bet"
-            android:layout_width="339dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="30dp"
-            android:gravity="center"
-            android:text="" />
+            android:layout_marginLeft="130dp"
+            android:layout_gravity="center"/>
 
 </LinearLayout>
 
