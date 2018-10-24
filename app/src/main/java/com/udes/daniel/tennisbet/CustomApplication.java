@@ -11,19 +11,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomApplication extends Application {
 
     private Context context;
 
     private ArrayList<Match> ListMatchs = new ArrayList<Match>();
+    private ArrayList<Bet> BetMatch = new ArrayList<>();
     private ArrayList<Match> PrevListMatchs = new ArrayList<Match>();
     private NotificationManager notificationManager;
     private ArrayList<UpdateListMatchsListener> listeners = new ArrayList<UpdateListMatchsListener>();
     private boolean connected = false;
     private boolean serviceAlive = false;
 
-    private double bet;
 
     @Override
     public void onCreate() {
@@ -32,14 +34,6 @@ public class CustomApplication extends Application {
         this.notificationManager = new NotificationManager(context);
 
         launchService();
-    }
-
-    public double getBet() {
-        return bet;
-    }
-
-    public void setBet(double bet) {
-        this.bet = bet;
     }
 
     public ArrayList<Match> getListMatchs() {
@@ -72,7 +66,13 @@ public class CustomApplication extends Application {
     }
 
     public Match getMatch(int id) {
-        return this.ListMatchs.get(id);
+        try {
+            return this.ListMatchs.get(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static ArrayList<Match> createListMatchFromJSon (JSONArray obj) {
@@ -152,4 +152,18 @@ public class CustomApplication extends Application {
     public void setServiceAlive(boolean serviceAlive) {
         this.serviceAlive = serviceAlive;
     }
+
+    public Bet getBetMatch(int id) {
+        for (Bet tmp:BetMatch) {
+            if (tmp.getIdMatch() == id) {
+                return tmp;
+            }
+        }
+        return null;
+    }
+
+    public void addBetMatch(Bet bet) {
+        BetMatch.add(bet);
+    }
+
 }

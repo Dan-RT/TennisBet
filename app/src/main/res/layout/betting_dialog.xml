@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+>
+
+
+    <TextView
+            android:text="@string/bet"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#000"
+            android:textColor="#fff"
+            android:id="@+id/textView"/>
+
+    <RadioGroup
+            android:id="@+id/radio_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RadioButton
+                android:id="@+id/activity_bet_name_player_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/player_1"
+                android:checked="true" />
+
+        <RadioButton
+                android:id="@+id/activity_bet_name_player_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/player_2" />
+    </RadioGroup>
+    <EditText
+            android:id="@+id/bet_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="" />
+</LinearLayout>

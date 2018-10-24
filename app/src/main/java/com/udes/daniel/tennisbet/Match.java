@@ -23,6 +23,7 @@ public class Match implements Parcelable {
     private int nb_exchanges;
     private ArrayList<Integer> contests;
 
+
     public Match () {
         this.contests = new ArrayList<Integer>();
         this.player_1 = new Player();
@@ -146,6 +147,17 @@ public class Match implements Parcelable {
         this.player_2 = player_2;
     }
 
+    public String getPlayerNameById(int id) {
+        if (id == 1) {
+            return player_1.toString();
+        } else if (id == 2) {
+            return player_2.toString();
+        } else {
+            return "Error";
+        }
+    }
+
+
     public int getPitch() {
         return pitch;
     }
@@ -253,4 +265,6 @@ public class Match implements Parcelable {
         }
         return "";
     }
+
+
 }

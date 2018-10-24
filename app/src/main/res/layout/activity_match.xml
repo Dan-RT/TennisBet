@@ -137,5 +137,13 @@
             android:gravity="center"
             android:layout_marginLeft="130dp"/>
 
+    <TextView
+            android:id="@+id/display_bet"
+            android:layout_width="339dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:text="" />
+
 </LinearLayout>
 
