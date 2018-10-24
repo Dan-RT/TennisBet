@@ -19,7 +19,7 @@ const demarrer = function () {
     }
 
     tick += 1;
-  }, Math.floor(1000 / modificateurVitesse));
+  }, Math.floor(100 / modificateurVitesse));
 };
 
 function demarrerPartie (partie) {
@@ -31,7 +31,7 @@ function demarrerPartie (partie) {
     if (partie.estTerminee()) {
       clearInterval(timer);
     }
-  }, Math.floor(1000 / modificateurVitesse));
+  }, Math.floor(100 / modificateurVitesse));
 }
 
 module.exports = {};

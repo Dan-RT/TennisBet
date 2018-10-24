@@ -30,7 +30,7 @@ public class CustomApplication extends Application {
     public void onCreate() {
         super.onCreate();
         this.context = getApplicationContext();
-        this.notificationManager = new NotificationManager(context);
+        this.notificationManager = new NotificationManager(context, this);
 
         launchService();
     }
@@ -156,8 +156,8 @@ public class CustomApplication extends Application {
 
         for (Bet tmp:BetMatch) {
             if (tmp.getIdMatch() == id) {
-                Toast toast = Toast.makeText(context, "id : " + id + " id bet " + tmp.getIdMatch(), Toast.LENGTH_SHORT);
-                toast.show();
+                //Toast toast = Toast.makeText(context, "id : " + id + " id bet " + tmp.getIdMatch(), Toast.LENGTH_SHORT);
+                //toast.show();
                 return tmp;
             }
         }

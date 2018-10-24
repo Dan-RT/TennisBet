@@ -1,10 +1,14 @@
 package com.udes.daniel.tennisbet;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Bet {
 
     private int idMatch;
     private int player;
     private double amount;
+    private boolean notificationTriggered = false;
 
     public Bet() {
 
@@ -41,10 +45,23 @@ public class Bet {
     }
 
     public String toJSon() {
-        return "{" +
-                "  \"id_match\": " + idMatch + ",\n" +
-                "  \"id_player\": " + player + ",\n" +
-                "  \"bet_amount\": " + amount +
-                "}";
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("id_match", idMatch);
+            obj.put("id_player", player);
+            obj.put("bet_amount", amount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return obj.toString();
+    }
+
+    public boolean isNotificationTriggered() {
+        return notificationTriggered;
+    }
+
+    public void setNotificationTriggered(boolean notificationTriggered) {
+        this.notificationTriggered = notificationTriggered;
     }
 }

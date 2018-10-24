@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.*;
@@ -246,37 +247,7 @@ public class MatchActivity extends AppCompatActivity implements UpdateListMatchs
 
         final Bet bet = new Bet(id_match, id_player, amount);
 
-        new Thread(){
-            public void run(){
-
-                try {
-
-                    URL url = new URL("http://10.0.2.2:3000/parties/pari/");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-                    conn.connect();
-
-                    Log.i("POST REQUEST", bet.toJSon());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(URLEncoder.encode(bet.toJSon(), "UTF-8"));
-
-                    os.flush();
-                    os.close();
-
-                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
-                    Log.i("MSG" , conn.getResponseMessage());
-
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        new AsyncTaskPOSTrequest().execute("http://10.0.2.2:3000/parties/pari/", bet.toJSon());
 
         application.addBetMatch(bet);
         manageBetButton(match.getPlayerNameById(id_player), amount);
