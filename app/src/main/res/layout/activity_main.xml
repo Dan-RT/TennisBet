@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              tools:context="com.udes.daniel.tennisbet.MainActivity"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/activity_main_test_Tewt_View"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Liste des matchs"
+            android:gravity="center"
+            android:layout_marginTop="50dp" android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/activity_main_list_match"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
+
+
+
+
+
+
+        <!--
+        <android.support.constraint.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.udes.daniel.tennisbet.MainActivity">
+
+
+            <Button
+                    android:id="@+id/activity_main_test_button"
+                    android:text="TEST"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteY="195dp"
+                    tools:layout_editor_absoluteX="148dp"
+                    tools:ignore="MissingConstraints"/>
+
+
+
+
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <Button
+                        android:text="HTTP Request"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activity_main_HTTP_Request"
+                        android:layout_marginTop="220dp"/>
+
+                <Button
+                        android:id="@+id/activity_main_reset_button"
+                        android:text="Reset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="120dp"/>
+
+            </RelativeLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        -->
